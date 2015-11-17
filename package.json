@@ -1,0 +1,15 @@
+{
+  "name": "materialdemo",
+  "version": "1.0.0",
+  "description": "hello",
+  "main": "index.js",
+  "dependencies": {
+    "materialize-css": "^0.97.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "summerbaby",
+  "license": "MIT"
+}
