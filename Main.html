@@ -9,12 +9,12 @@
 		<link rel="stylesheet" href="css/animate.css" />
 		<link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" />
 		<link rel="stylesheet" href="css/home.css" />
-			<!--when release, change to CDN-->
+		<!--when release, change to CDN-->
 		<title>Merkle Report System</title>
 	</head>
 
 	<body>
-		      
+
 		<!--Nav show only on small screens-->
 		<nav class="hide-on-med-and-up">
 			<div class="nav-wrapper light-blue">
@@ -36,14 +36,22 @@
 				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>Username</div>
 			</div>
 			<!--others-->
+
+			<!--<button class="btn waves-effect waves-light blue" style="width: 100%;">Fill Report</button>
+			<button class="btn waves-effect waves-light blue" style="width: 100%;">Query Report</button>
+			<button class="btn waves-effect waves-light blue" style="width: 100%;">Add Project</button>
+			<button class="btn waves-effect waves-light blue" style="width: 100%;">Assign Project</button>
+			<button class="btn waves-effect waves-light blue" style="width: 100%;">Delete Project</button>-->
+
 		</div>
 
 		<!-- Dropdown Structure -->
 		<ul id='dropdown1' class='dropdown-content'>
-			<li><a href="#!">Change password</a></li>
+			<li><a href="#!">Edit</a></li>
 			<li class="divider"></li>
-			<li><a href="#!">Log off</a></li>
+			<li><a href="index.html">Log off</a></li>
 		</ul>
+
 		<div class="righ-main-container">
 			<!--write all your components in right-main-container-->
 			<div class="row">
@@ -52,6 +60,17 @@
 						<div class="card-content white-text">
 							<span class="card-title">Demo Right Container</span>
 							<p>把你所有的主要组件写在class 为right-main-container的div里面，这样保证大小屏幕显示无异常</p>
+							<div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+								<a class="btn-floating btn-large red">
+									<i class="large mdi-navigation-menu"></i>
+								</a>
+								<ul>
+									<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+									<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+									<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+									<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+								</ul>
+							</div>
 						</div>
 						<div class="card-action">
 							<a href="#">This is a link</a>
@@ -67,7 +86,6 @@
 		<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
 		<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
-
 		<script type="application/javascript">
 			$(document).ready(function() {
 				$(".button-collapse").sideNav();
