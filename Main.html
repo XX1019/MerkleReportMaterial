@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+
+		<!--debug-->
+		<link rel="stylesheet" href="css/animate.css" />
+		<link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" />
+		<link rel="stylesheet" href="css/home.css" />
+		<!--when release, change to CDN-->
+		<title>Merkel Report System</title>
+	</head>
+
+	<body>
+		<!--Nav show only on small screens-->
+		<nav class="hide-on-med-and-up">
+			<div class="nav-wrapper light-blue">
+				<a href="#" class="brand-logo">Merkel</a>
+				<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+			</div>
+		</nav>
+		<!--side bar can toggle on small screens but do not show on medium and up-->
+		<div id="slide-out" class="side-nav">
+			This is slide menu
+		</div>
+		<!--side bar shows only on medium and large screen-->
+		<div class="hide-on-small-and-down main-side-card z-depth-1-half grey lighten-5">
+			<div class="main-user-profile">
+				<i class="medium mdi-action-account-circle white-text "></i>
+				<div class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>zhilong.wang@shanbay.com</div>
+			</div>
+			<!--others-->
+		</div>
+
+		<!-- Dropdown Structure -->
+		<ul id='dropdown1' class='dropdown-content'>
+			<li><a href="#!">view profile</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">edit</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">logout</a></li>
+		</ul>
+		<!--debug-->
+		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+		<script type="application/javascript">
+			$(document).ready(function() {
+				$(".button-collapse").sideNav();
+				$('.dropdown-button').dropdown({
+					inDuration: 300,
+					outDuration: 225,
+					constrain_width: true, // Does not change width of dropdown to that of the activator
+					hover: false, // Activate on hover
+					gutter: 0, // Spacing from edge
+					belowOrigin: false // Displays dropdown below the button
+				});
+			});
+		</script>
+		<!--when release, change to CDN-->
+	</body>
+
+</html>
