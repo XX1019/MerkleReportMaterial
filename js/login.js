@@ -18,7 +18,7 @@ function login() {
 			// 成功了，现在可以做其他事情了.
 			console.log("successed");
 
-			window.location.href = "totalfunction.html";
+			window.location.href = "Main.html";
 		},
 		error: function(user, error) {
 			// 失败了.
