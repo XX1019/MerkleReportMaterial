@@ -17,7 +17,7 @@ function register() {
 	console.log(confirm.value);
 
 if(pwd.value!=confirm.value){
-	alert("Password is not consistent");
+	Materialize.toast('Password is not consistent', 3000, 'rounded');
 }else{
 	var user = new AV.User();
 	user.set("username", username.value);
