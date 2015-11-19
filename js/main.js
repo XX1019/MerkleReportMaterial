@@ -6,6 +6,7 @@ $(document).ready(function() {
 	document.getElementById("user").innerHTML = "Hi~ " + user_current.get('username') + ", Welcome!";
 
 	addProject_linkmanager();
+	load_Projectinfo();
 });
 
 function logoff() {
@@ -15,15 +16,16 @@ function logoff() {
 
 //show change password
 function showChangePwd() {
-		document.getElementById("changePwd").style.display = 'block';
-		var user_current = null;
-		user_current = AV.User.current();
-		$('#name_changePwd').html("User Name: " + user_current.get('username'));
-	}
-	//hidden change password
+	$('.showorhidden').addClass('hide');
+	$('#changePwd').removeClass('hide');
+	var user_current = null;
+	user_current = AV.User.current();
+	$('#name_changePwd').html("User Name: " + user_current.get('username'));
+}
+//hidden change password
 
 function hiddenChangePwd() {
-	document.getElementById("changePwd").style.display = 'none';
+	$('#changePwd').addClass('hide');
 }
 
 function confrimChangePwd() {
@@ -36,6 +38,7 @@ function confrimChangePwd() {
 
 	if (new1 != new2) {
 		Materialize.toast('New passwords are inconsistent', 3000, 'rounded');
+		//		document.getElementById("old_pwd").style.color = "red";
 	} else {
 		var user = AV.User.current();
 		user.updatePassword(old, new1, {
@@ -57,15 +60,15 @@ function confrimChangePwd() {
 
 
 function hiddenCreateProject() {
-	document.getElementById("addProject").style.display = 'none';
+	$("#addProject").addClass('hide');
 }
 
 function showAddProject() {
+	$('.showorhidden').addClass('hide');
+	$("#addProject").removeClass('hide');
 
-		document.getElementById("addProject").style.display = 'block';
-
-	}
-	//this function has problem
+}
+//this function has problem
 
 function addProject_linkmanager() {
 	var Manager = AV.Object.extend('Manager');
@@ -90,34 +93,80 @@ function addProject_linkmanager() {
 
 }
 
-function createProject(){
-	var m=$("#choose_manager").find("option:selected").text();
+function createProject() {
+	var m = $("#choose_manager").find("option:selected").text();
 
-	var projectn=$('#projectN').val();
-	var Sm=$('#sm').val();
-		console.log(m+projectn+Sm);
-		var Project = AV.Object.extend("Project");
+	var projectn = $('#projectN').val();
+	var Sm = $('#sm').val();
+	console.log(m + projectn + Sm);
+	var Project = AV.Object.extend("Project");
 	var project = new Project();
-	if(project==""|Sm==""|m=="Choose manager"){
-   	Materialize.toast("Please fill out the complete!", 3000, 'rounded');
-   }else{
-   	
-   	project.set("projectName",projectn);
-   	project.set("DELSM",Sm);
-   	project.set("manager",m);
+	if (project == "" | Sm == "" | m == "Choose manager") {
+		Materialize.toast("Please fill out the complete!", 3000, 'rounded');
+	} else {
 
-   	   	project.save(null,{
-   		success:function(){
-   			//将此项目关系与manager绑定
+		project.set("projectName", projectn);
+		project.set("DELSM", Sm);
+		project.set("manager", m);
 
-   		Materialize.toast('successfully',3000,'round');
-		
-   				//location.reload();
-   		},
-   		error:function(error){
-   			console.log(error);
-   			alert('Project has been in existence!')
-   		}
-   	});
-   }
+		project.save(null, {
+			success: function() {
+				//将此项目关系与manager绑定
+
+				Materialize.toast('successfully', 3000, 'round');
+
+				//location.reload();
+			},
+			error: function(error) {
+				console.log(error);
+				alert('Project has been in existence!')
+			}
+		});
+	}
+}
+
+function hiddenDeleteProject() {
+	$('#deleteProject').addClass('hide');
+}
+
+function showDeleteProject() {
+	$('.showorhidden').addClass('hide');
+	$('#deleteProject').removeClass('hide');
+}
+
+
+function load_Projectinfo() {
+	var Project = AV.Object.extend('Project');
+	var query_project = new AV.Query(Project);
+	var project = null;
+	var ProjectinfoString = "";
+	query_project.find({
+		success: function(result) {
+			for (var i = 0; i < result.length; ++i) {
+				project = result[i].get('projectName');
+				//console.log(manager01);
+
+				ProjectinfoString += '<option value='+ i +'>' + project + '</option>';
+			}
+			console.log(ProjectinfoString);
+			$("#choose_project_to_delete").append(ProjectinfoString);
+			$('#choose_project_to_delete').material_select('update');
+		},
+		error: function(error) {
+			console.log(error);
+		}
+
+	});
+
+}
+
+function linkdeletedProjectinfo() {
+	var m = $("#choose_project_to_delete").find("option:selected").text();
+	console.log(m);
+}
+
+function deleteProject() {
+
+
+
 }

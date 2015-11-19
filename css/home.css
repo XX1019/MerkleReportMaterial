@@ -43,6 +43,7 @@ body {
 .righ-main-container {
 	margin-left: 280px;
 	height: 100%;
+	overflow: hidden;
 }
 .changepwd-card {
 	height: 400px;
@@ -50,6 +51,11 @@ body {
 	margin: 0 auto;
 }
 .addProject-card{
+	height: 400px;
+	width: 450px;
+	margin: 0 auto;
+}
+.deleteProject-card{
 	height: 400px;
 	width: 450px;
 	margin: 0 auto;
@@ -65,3 +71,4 @@ body {
 		box-shadow: none;
 	}
 }
+

@@ -62,13 +62,13 @@
 							<li class="collection">
 
 								<li class="collection-item">
-									<div>Add New Project<a href="#!" class="secondary-content" onclick="showAddProject()"><i class="small mdi-content-add-circle-outline"></i></a></div>
+									<div onclick="showAddProject()">Add New Project<a href="#!" class="secondary-content"><i class="small mdi-content-add-circle-outline"></i></a></div>
 								</li>
 								<li class="collection-item">
 									<div>Assign Project<a href="#!" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a></div>
 								</li>
 								<li class="collection-item">
-									<div>Delete Project<a href="#!" class="secondary-content"><i class="small mdi-content-clear"></i></a></div>
+									<div onclick="showDeleteProject()">Delete Project<a href="#!" class="secondary-content"><i class="small mdi-content-clear"></i></a></div>
 								</li>
 							</li>
 						</ul>
@@ -82,10 +82,10 @@
 						<ul class="collection with-header">
 							<li class="collection">
 								<li class="collection-item">
-									<div>Change Password<a href="#!" class="secondary-content" onclick="showChangePwd()"><i class="small mdi-action-settings"></i></a></div>
+									<div onclick="showChangePwd()">Change Password<a href="#!" class="secondary-content"><i class="small mdi-action-settings"></i></a></div>
 								</li>
 								<li class="collection-item">
-									<div>Log Off<a href="#!" class="secondary-content" onclick="logoff()"><i class="small mdi-action-exit-to-app"></i></a></div>
+									<div onclick="logoff()">Log Off<a href="#!" class="secondary-content"><i class="small mdi-action-exit-to-app"></i></a></div>
 								</li>
 						</ul>
 					</div>
@@ -104,8 +104,39 @@
 			<div class="righ-main-container valign-wrapper">
 				<!--write all your components in right-main-container-->
 
+				<!--Delete Project -->
+				<div class="deleteProject-card z-depth-1 showorhidden hide" id="deleteProject">
+					<br />
+					<div class="container">
+						<!--<div class="input-field">
+							<select id="choose_project_to_delete">
+								<option value="" disabled selected>Choose project</option>
+							</select>
+							<label style="font-size:18px ;">Target Project</label>
+						</div>-->
+						<div class="row valign-wrapper">
+							<h6 class="col s4 valign" style="margin-left: 20px; margin-right: -15%;">Project:</h6>
+							<div class="input-field col s8">
+								<select id="choose_project_to_delete" onchange="linkdeletedProjectinfo()" >
+									<option value="" disabled selected>Choose project</option>
+								</select>
+								<!--<label style="font-size:18px ;">Target Project</label>-->
+							</div>
+						</div>
+						<h6 class="" id='deleteproject_sm' style="margin:20px;">DEL/SM:</h6>
+						<div class="divider"></div>
+						<h6 class="" id='deleteproject_gdcm' style="margin:20px;">GDC Manager:</h6>
+						<div class="divider"></div>
+						<div class="center-align" style="margin-top: 20%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="deleteProject()">Delete</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenDeleteProject()">Cancel</button>
+						</div>
+					</div>
+				</div>
+
 				<!--Add new Project -->
-				<div class=" addProject-card z-depth-1 " id="addProject" style="display: none;">
+				<div class="addProject-card z-depth-1 showorhidden hide" id="addProject">
+					<br />
 					<div class="container">
 						<div class="input-field ">
 							<input id="projectN" type="text" class="validate">
@@ -116,7 +147,7 @@
 							<label for="sm">DEL/SM</label>
 						</div>
 						<div class="input-field">
-							
+
 							<select id="choose_manager">
 								<option value="" disabled selected>Choose manager</option>
 
@@ -130,7 +161,7 @@
 					</div>
 				</div>
 
-				<div class=" changepwd-card z-depth-1 " id="changePwd" style="display: none;">
+				<div class=" changepwd-card z-depth-1 showorhidden hide" id="changePwd">
 					<div class="container">
 						<br />
 						<label style="font-size: 16px;" id="name_changePwd">User Name:</label>
@@ -182,13 +213,9 @@
 						gutter: 0, // Spacing from edge
 						belowOrigin: false // Displays dropdown below the button
 					});
-				});
-				$(document).ready(function() {
 					$('.tooltipped').tooltip({
 						delay: 50
 					});
-				});
-				$(document).ready(function() {
 					$('select').material_select();
 				});
 			</script>
