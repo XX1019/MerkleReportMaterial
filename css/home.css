@@ -28,15 +28,17 @@ body {
 	padding-left: 15px;
 	height: 150px;
 	background-image: url(../img/profile_bg.png);
+
 }
 
 .main-user-profile-button {
 	top: 20px;
-	padding-left: 5px;
 	color: white;
 	display: block;
 	padding: 0;
 	text-transform: none;
+	text-transform: none;
+	text-align: center;
 }
 .righ-main-container {
 	margin-left: 280px;
@@ -49,3 +51,4 @@ body {
 		margin-left: 0%;
 	}
 }
+
