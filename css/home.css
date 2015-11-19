@@ -22,7 +22,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 }
-
+/*the personal background*/
 .main-user-profile {
 	margin: 0;
 	padding-left: 15px;
@@ -30,7 +30,7 @@ body {
 	background-image: url(../img/profile_bg.png);
 
 }
-
+/*the welcome*/
 .main-user-profile-button {
 	top: 20px;
 	color: white;
@@ -40,8 +40,17 @@ body {
 	text-transform: none;
 	text-align: center;
 }
+/*the right div*/
 .righ-main-container {
 	margin-left: 280px;
+	height: 100%;
+
+}
+
+.changepwd-card{
+	height: 400px;
+	width: 400px;
+	margin: 0 auto;
 }
 @media only screen and (min-width: 320px) and (max-width: 640px) {
 	.login-card {
