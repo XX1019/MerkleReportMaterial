@@ -36,103 +36,163 @@
 				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>Username</div>
 			</div>
 			<!--the following is the chosen-->
-			<ul class="collection with-header">
-				<li class="collection-header">
-					<h5>Report</h5></li>
-				<li class="collection-item">
-					<div>Fill Report<a href="#!" class="secondary-content"><i class="small mdi-action-input"></i></a></div>
+			<ul class="collapsible" data-collapsible="accordion">
+				<li>
+					<div class="collapsible-header">
+						<h5>Report</h5></div>
+					<div class="collapsible-body">
+						<ul class="collection with-header">
+							<li class="collection">
+
+								<li class="collection-item">
+									<div>Fill Report<a href="#!" class="secondary-content"><i class="small mdi-action-input"></i></a></div>
+								</li>
+								<li class="collection-item">
+									<div>Query Report<a href="#!" class="secondary-content"><i class="small mdi-action-pageview"></i></a></div>
+								</li>
+							</li>
+						</ul>
+
 				</li>
-				<li class="collection-item">
-					<div>Query Report<a href="#!" class="secondary-content"><i class="small mdi-action-pageview"></i></a></div>
+				<li>
+					<div class="collapsible-header">
+						<h5>Project</h5></div>
+					<div class="collapsible-body">
+						<ul class="collection with-header">
+							<li class="collection">
+
+								<li class="collection-item">
+									<div>Add New Project<a href="#!" class="secondary-content" onclick="showAddProject()"><i class="small mdi-content-add-circle-outline"></i></a></div>
+								</li>
+								<li class="collection-item">
+									<div>Assign Project<a href="#!" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a></div>
+								</li>
+								<li class="collection-item">
+									<div>Delete Project<a href="#!" class="secondary-content"><i class="small mdi-content-clear"></i></a></div>
+								</li>
+							</li>
+						</ul>
+
+					</div>
 				</li>
-			</ul>
-			<ul class="collection with-header">
-				<li class="collection-header">
-					<h5>Project</h5></li>
-				<li class="collection-item">
-					<div>Add New Project<a href="#!" class="secondary-content"><i class="small mdi-content-add-circle-outline"></i></a></div>
-				</li>
-				<li class="collection-item">
-					<div>Assign Project<a href="#!" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a></div>
-				</li>
-				<li class="collection-item">
-					<div>Delete Project<a href="#!" class="secondary-content"><i class="small mdi-content-clear"></i></a></div>
-				</li>
+				<li>
+					<div class="collapsible-header">
+						<h5>Personal</h5></div>
+					<div class="collapsible-body">
+						<ul class="collection with-header">
+							<li class="collection">
+								<li class="collection-item">
+									<div>Change Password<a href="#!" class="secondary-content" onclick="showChangePwd()"><i class="small mdi-action-settings"></i></a></div>
+								</li>
+								<li class="collection-item">
+									<div>Log Off<a href="#!" class="secondary-content" onclick="logoff()"><i class="small mdi-action-exit-to-app"></i></a></div>
+								</li>
+						</ul>
+					</div>
+					</li>
 			</ul>
 
-		</div>
+			</div>
 
-		<!-- Dropdown Structure -->
-		<!--<ul id='dropdown1' class='dropdown-content'>
+			<!-- Dropdown Structure -->
+			<!--<ul id='dropdown1' class='dropdown-content'>
 			<li><a href="#!">Edit</a></li>
 			<li class="divider"></li>
 			<li><a href="index.html">Log off</a></li>
 		</ul>-->
 
-		<div class="righ-main-container valign-wrapper">
-			<!--write all your components in right-main-container-->
+			<div class="righ-main-container valign-wrapper">
+				<!--write all your components in right-main-container-->
 
-			<div class=" changepwd-card z-depth-1 " id="changePwd" style="display: none;">
-				<div class="container">
-					<br />
-				<label style="font-size: 16px;" id="name_changePwd" >User Name:</label>
-				<div class="input-field ">
-					<input id="old_pwd" type="password" class="validate">
-					<label for="old_pwd">Old Password</label>
+				<!--Add new Project -->
+				<div class=" addProject-card z-depth-1 " id="addProject" style="display: none;">
+					<div class="container">
+						<div class="input-field ">
+							<input id="projectN" type="text" class="validate">
+							<label for="projectN">New Project Name</label>
+						</div>
+						<div class="input-field ">
+							<input id="sm" type="text" class="validate">
+							<label for="sm">DEL/SM</label>
+						</div>
+						<div class="input-field ">
+							<select id="choose_manager">
+								<option value="" disabled selected>Choose manager</option>
+
+							</select>
+							<label>GDC Manager</label>
+						</div>
+						<div class="center-align" style="margin-top: 20%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="">Create</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenCreateProject()">Cancel</button>
+						</div>
+					</div>
 				</div>
-				<div class="input-field ">
-					<input id="new_pwd" type="password" class="validate">
-					<label for="new_pwd">New Password</label>
+
+				<div class=" changepwd-card z-depth-1 " id="changePwd" style="display: none;">
+					<div class="container">
+						<br />
+						<label style="font-size: 16px;" id="name_changePwd">User Name:</label>
+						<div class="input-field ">
+							<input id="old_pwd" type="password" class="validate">
+							<label for="old_pwd">Old Password</label>
+						</div>
+						<div class="input-field ">
+							<input id="new_pwd" type="password" class="validate">
+							<label for="new_pwd">New Password</label>
+						</div>
+						<div class="input-field ">
+							<input id="new1_pwd" type="password" class="validate">
+							<label for="new1_pwd">Confirm New Password</label>
+						</div>
+						<div class="center-align" style="margin-top: 10%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="confrimChangePwd()">Confirm</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenChangePwd()">Cancel</button>
+						</div>
+
+					</div>
 				</div>
-				<div class="input-field ">
-					<input id="new1_pwd" type="password" class="validate">
-					<label for="new1_pwd">Confirm New Password</label>
-				</div>
-				<div class="center-align" style="margin-top: 10%;">
-				<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="confrimChangePwd()">Confirm</button>
-				<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenChangePwd()">Cancel</button>
-			</div>
-			
+
+				<!--The following is the log off and change password function. -->
+				<div class="fixed-action-btn horizontal " style="bottom: 45px; right: 24px;">
+					<a class="btn-floating btn-large red">
+						<i class="large mdi-navigation-menu"></i>
+					</a>
+					<ul>
+						<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password"><i class="mdi-action-settings" onclick="showChangePwd()"></i></a></li>
+						<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" onclick="logoff()"><i class="mdi-action-exit-to-app"></i></a></li>
+					</ul>
 				</div>
 			</div>
 
-			<!--
-            	The following is the log off and change password function. -->
-			<div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
-				<a class="btn-floating btn-large red">
-					<i class="large mdi-navigation-menu"></i>
-				</a>
-				<ul>
-					<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password"><i class="mdi-action-settings" onclick="showChangePwd()"></i></a></li>
-					<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" onclick="logoff()"><i class="mdi-action-exit-to-app"></i></a></li>
-				</ul>
-			</div>
-		</div>
-
-		<!--debug-->
-		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
-		<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
-		<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-		<script type="application/javascript">
-			$(document).ready(function() {
-				$(".button-collapse").sideNav();
-				$('.dropdown-button').dropdown({
-					inDuration: 300,
-					outDuration: 225,
-					constrain_width: true, // Does not change width of dropdown to that of the activator
-					hover: false, // Activate on hover
-					gutter: 0, // Spacing from edge
-					belowOrigin: false // Displays dropdown below the button
+			<!--debug-->
+			<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+			<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+			<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
+			<script type="text/javascript" src="js/main.js"></script>
+			<script type="application/javascript">
+				$(document).ready(function() {
+					$(".button-collapse").sideNav();
+					$('.dropdown-button').dropdown({
+						inDuration: 300,
+						outDuration: 225,
+						constrain_width: true, // Does not change width of dropdown to that of the activator
+						hover: false, // Activate on hover
+						gutter: 0, // Spacing from edge
+						belowOrigin: false // Displays dropdown below the button
+					});
 				});
-			});
-			$(document).ready(function() {
-				$('.tooltipped').tooltip({
-					delay: 50
+				$(document).ready(function() {
+					$('.tooltipped').tooltip({
+						delay: 50
+					});
 				});
-			});
-		</script>
-		<!--when release, change to CDN-->
+				$(document).ready(function() {
+					$('select').material_select();
+				});
+			</script>
+
+			<!--when release, change to CDN-->
 	</body>
 
 </html>
