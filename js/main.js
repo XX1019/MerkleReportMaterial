@@ -4,8 +4,8 @@ $(document).ready(function() {
 	var user_current = null;
 	user_current = AV.User.current();
 	document.getElementById("user").innerHTML = "Hi~ " + user_current.get('username') + ", Welcome!";
-	
-addProject_linkmanager() ;
+
+	addProject_linkmanager();
 });
 
 function logoff() {
@@ -62,10 +62,11 @@ function hiddenCreateProject() {
 
 function showAddProject() {
 
-	document.getElementById("addProject").style.display = 'block';
+		document.getElementById("addProject").style.display = 'block';
 
-}
-//this function has problem
+	}
+	//this function has problem
+
 function addProject_linkmanager() {
 	var Manager = AV.Object.extend('Manager');
 	var query_manager = new AV.Query(Manager);
@@ -75,19 +76,48 @@ function addProject_linkmanager() {
 		success: function(result) {
 			for (var i = result.length - 1; i >= 0; --i) {
 				manager01 = result[i].get('username');
+				addoption += '<option>' + manager01 + '</option>';
 				console.log(manager01);
-				addoption = '<option>' + manager01 + '</option>';
-		$('#choose_manager').material_select('update');
-		$("#choose_manager").append(addoption);
 			}
-//			console.log(addoption);
-	
-
+			$("#choose_manager").append(addoption);
+			$('#choose_manager').material_select('update');
 		},
 		error: function(error) {
-			console.log(error);
+			console.dir(error);
 		}
 
 	});
+
+}
+
+function createProject(){
+	var m=$("#choose_manager").find("option:selected").text();
+
+	var projectn=$('#projectN').val();
+	var Sm=$('#sm').val();
+		console.log(m+projectn+Sm);
+		var Project = AV.Object.extend("Project");
+	var project = new Project();
+	if(project==""|Sm==""|m=="Choose manager"){
+   	Materialize.toast("Please fill out the complete!", 3000, 'rounded');
+   }else{
+   	
+   	project.set("projectName",projectn);
+   	project.set("DELSM",Sm);
+   	project.set("manager",m);
+
+   	   	project.save(null,{
+   		success:function(){
+   			//将此项目关系与manager绑定
+
+   		Materialize.toast('successfully',3000,'round');
 		
+   				//location.reload();
+   		},
+   		error:function(error){
+   			console.log(error);
+   			alert('Project has been in existence!')
+   		}
+   	});
+   }
 }
