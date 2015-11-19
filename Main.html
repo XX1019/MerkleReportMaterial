@@ -13,7 +13,7 @@
 		<title>Merkle Report System</title>
 	</head>
 
-	<body>
+	<body class="grey lighten-4">
 
 		<!--Nav show only on small screens-->
 		<nav class="hide-on-med-and-up">
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<!--side bar shows only on medium and large screen-->
-		<div class="hide-on-small-and-down main-side-card z-depth-1-half ">
+		<div class="hide-on-small-and-down main-side-card z-depth-1-half white">
 			<div class="main-user-profile">
 				<i class="medium mdi-action-account-circle white-text  "></i>
 				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>Username</div>
@@ -69,28 +69,32 @@
 			<li><a href="index.html">Log off</a></li>
 		</ul>
 
-		<div class="righ-main-container valign-wrapper">
+		<div class="righ-main-container">
 			<!--write all your components in right-main-container-->
-
-			<div class=" changepwd-card z-depth-1">
-				<label>User Name:</label>
-				
-			</div>
-
-			<!--
-            	The following is the log off and change password function. -->
-			<div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
-				<a class="btn-floating btn-large red">
-					<i class="large mdi-navigation-menu"></i>
-				</a>
-				<ul>
-					<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password"><i class="mdi-action-settings" ></i></a></li>
-					<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" href="index.html"><i class="mdi-action-exit-to-app"></i></a></li>
-				</ul>
+			<div class="changepwd-card z-depth-1-half white function-card hide">
+				<div class="row">
+					<p class="flow-text">check your old password before you change it</p>
+				</div>
+				<div class="row">
+					<div class="input-field">
+						<input id="password" type="password" class="validate">
+						<label for="password">Password</label>
+					</div>
+				</div>
 			</div>
 		</div>
+		<!--The following is the log off and change password function.-->
+		<div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+			<a class="btn-floating btn-large red">
+				<i class="large mdi-navigation-menu"></i>
+			</a>
+			<ul>
+				<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password" onclick="onChangePWDClick()"><i class="mdi-action-settings" ></i></a></li>
+				<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" href="index.html"><i class="mdi-action-exit-to-app"></i></a></li>
+			</ul>
+		</div>
 
-		<!--debug-->
+		debug
 		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
 		<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
@@ -106,12 +110,14 @@
 					gutter: 0, // Spacing from edge
 					belowOrigin: false // Displays dropdown below the button
 				});
-			});
-			$(document).ready(function() {
 				$('.tooltipped').tooltip({
 					delay: 50
 				});
 			});
+			function onChangePWDClick() {
+				$(".changepwd-card").removeClass("hide");
+				$(".changepwd-card").addClass("animated bounceIn");
+			}
 		</script>
 		<!--when release, change to CDN-->
 	</body>
