@@ -3,17 +3,14 @@ body {
 	min-height: height: 100vh !important;
 	height: 100vh;
 }
-
 .merkel {
 	box-sizing: border-box;
 }
-
 .login-card {
 	width: 300px;
 	height: 400px;
 	margin: auto;
 }
-
 .main-side-card {
 	position: fixed;
 	width: 270px;
@@ -23,14 +20,15 @@ body {
 	overflow: hidden;
 }
 /*the personal background*/
+
 .main-user-profile {
 	margin: 0;
 	padding-left: 15px;
 	height: 150px;
 	background-image: url(../img/profile_bg.png);
-
 }
 /*the welcome*/
+
 .main-user-profile-button {
 	top: 20px;
 	color: white;
@@ -41,15 +39,14 @@ body {
 	text-align: center;
 }
 /*the right div*/
+
 .righ-main-container {
 	margin-left: 280px;
 	height: 100%;
-
 }
-
-.changepwd-card{
+.changepwd-card {
 	height: 400px;
-	width: 400px;
+	width: 450px;
 	margin: 0 auto;
 }
 @media only screen and (min-width: 320px) and (max-width: 640px) {
@@ -59,5 +56,7 @@ body {
 	.righ-main-container {
 		margin-left: 0%;
 	}
+	.changepwd-card {
+		box-shadow: none;
+	}
 }
-

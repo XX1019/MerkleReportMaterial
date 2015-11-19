@@ -22,7 +22,8 @@ function login() {
 		},
 		error: function(user, error) {
 			// 失败了.
-			alert("密码或用户名不正确！");
+//			alert("密码或用户名不正确！");
+			Materialize.toast("密码或用户名不正确！", 3000, 'rounded');
 		}
 	});
 
