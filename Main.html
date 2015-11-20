@@ -60,7 +60,6 @@
 					<div class="collapsible-body">
 						<ul class="collection with-header">
 							<li class="collection">
-
 								<li class="collection-item">
 									<div onclick="showAddProject()">Add New Project<a href="#!" class="secondary-content"><i class="small mdi-content-add-circle-outline"></i></a></div>
 								</li>
@@ -73,7 +72,7 @@
 							</li>
 						</ul>
 
-					</div>
+						<!--</div>-->
 				</li>
 				<li>
 					<div class="collapsible-header">
@@ -87,9 +86,10 @@
 								<li class="collection-item">
 									<div onclick="logoff()">Log Off<a href="#!" class="secondary-content"><i class="small mdi-action-exit-to-app"></i></a></div>
 								</li>
+							</li>
 						</ul>
-					</div>
-					</li>
+
+				</li>
 			</ul>
 
 			</div>
@@ -150,124 +150,122 @@
 					</div>
 
 					<div class="center-align" style="margin-top: 10%;">
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="assignProject()">Assign</button>
+						<!--<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="assignProject()">Assign</button>-->
 						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenAssignProject()">Cancel</button>
 					</div>
 				</div>
 
-			
-
-			<!--Delete Project -->
-			<div class="deleteProject-card z-depth-1 showorhidden hide" id="deleteProject">
-				<br />
-				<div class="container">
-					<div class="row valign-wrapper">
-						<h6 class="col s3 valign" style="margin-left: 30px; margin-right: -5%;">Project:</h6>
-						<div class="">
-							<select class="browser-default" id="choose_project_to_delete" onchange="linkdeletedProjectinfo()">
-								<option value="" disabled selected>Choose project</option>
-							</select>
-						</div>
-					</div>
-					<h6 class="" id='deleteproject_sm' style="margin:30px;">DEL/SM:</h6>
-					<div class="divider"></div>
-					<h6 class="" id='deleteproject_gdcm' style="margin:30px;">GDC Manager:</h6>
-					<div class="divider"></div>
-					<div class="center-align" style="margin-top: 20%;">
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="deleteProject()">Delete</button>
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenDeleteProject()">Cancel</button>
-					</div>
-				</div>
-			</div>
-
-			<!--Add new Project -->
-			<div class="addProject-card z-depth-1 showorhidden hide" id="addProject">
-				<br />
-				<div class="container">
-					<div class="input-field ">
-						<input id="projectN" type="text" class="validate">
-						<label for="projectN">New Project Name</label>
-					</div>
-					<div class="input-field ">
-						<input id="sm" type="text" class="validate">
-						<label for="sm">DEL/SM</label>
-					</div>
-					<div class="row col s12 valign-wrapper">
-						<h6 class="col s5 valign" style="margin-left: 10px; margin-right:-10%;">GDC Manager:</h6>
-						<div class="">
-							<select class="browser-default" id="choose_manager" onchange="">
-								<option value="" disabled selected>Choose manager</option>
-							</select>
-						</div>
-					</div>
-			
-					<div class="center-align" style="margin-top: 15%;">
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="createProject()">Create</button>
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenCreateProject()">Cancel</button>
-					</div>
-				</div>
-			</div>
-
-			<div class=" changepwd-card z-depth-1 showorhidden hide" id="changePwd">
-				<div class="container">
+				<!--Delete Project -->
+				<div class="deleteProject-card z-depth-1 showorhidden hide" id="deleteProject">
 					<br />
-					<label style="font-size: 16px;" id="name_changePwd">User Name:</label>
-					<div class="input-field ">
-						<input id="old_pwd" type="password" class="validate">
-						<label for="old_pwd">Old Password</label>
+					<div class="container">
+						<div class="row valign-wrapper">
+							<h6 class="col s3 valign" style="margin-left: 30px; margin-right: -5%;">Project:</h6>
+							<div class="">
+								<select class="browser-default" id="choose_project_to_delete" onchange="linkdeletedProjectinfo()">
+									<option value="" disabled selected>Choose project</option>
+								</select>
+							</div>
+						</div>
+						<h6 class="" id='deleteproject_sm' style="margin:30px;">DEL/SM:</h6>
+						<div class="divider"></div>
+						<h6 class="" id='deleteproject_gdcm' style="margin:30px;">GDC Manager:</h6>
+						<div class="divider"></div>
+						<div class="center-align" style="margin-top: 20%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="deleteProject()">Delete</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenDeleteProject()">Cancel</button>
+						</div>
 					</div>
-					<div class="input-field ">
-						<input id="new_pwd" type="password" class="validate">
-						<label for="new_pwd">New Password</label>
-					</div>
-					<div class="input-field ">
-						<input id="new1_pwd" type="password" class="validate">
-						<label for="new1_pwd">Confirm New Password</label>
-					</div>
-					<div class="center-align" style="margin-top: 10%;">
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="confrimChangePwd()">Confirm</button>
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenChangePwd()">Cancel</button>
-					</div>
-
 				</div>
-			</div>
 
-			<!--The following is the log off and change password function. -->
-			<div class="fixed-action-btn horizontal " style="bottom: 45px; right: 24px;">
-				<a class="btn-floating btn-large red">
-					<i class="large mdi-navigation-menu"></i>
-				</a>
-				<ul>
-					<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password"><i class="mdi-action-settings" onclick="showChangePwd()"></i></a></li>
-					<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" onclick="logoff()"><i class="mdi-action-exit-to-app"></i></a></li>
-				</ul>
-			</div>
-		
-		</div>
-		<!--debug-->
-		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
-		<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
-		<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-		<script type="application/javascript">
-			$(document).ready(function() {
-				$(".button-collapse").sideNav();
-				$('.dropdown-button').dropdown({
-					inDuration: 300,
-					outDuration: 225,
-					constrain_width: true, // Does not change width of dropdown to that of the activator
-					hover: false, // Activate on hover
-					gutter: 0, // Spacing from edge
-					belowOrigin: false // Displays dropdown below the button
-				});
-				$('.tooltipped').tooltip({
-					delay: 50
-				});
-				$('select').material_select();
-			});
-		</script>
+				<!--Add new Project -->
+				<div class="addProject-card z-depth-1 showorhidden hide" id="addProject">
+					<br />
+					<div class="container">
+						<div class="input-field ">
+							<input id="projectN" type="text" class="validate">
+							<label for="projectN">New Project Name</label>
+						</div>
+						<div class="input-field ">
+							<input id="sm" type="text" class="validate">
+							<label for="sm">DEL/SM</label>
+						</div>
+						<div class="row col s12 valign-wrapper">
+							<h6 class="col s5 valign" style="margin-left: 10px; margin-right:-10%;">GDC Manager:</h6>
+							<div class="">
+								<select class="browser-default" id="choose_manager" onchange="">
+									<option value="" disabled selected>Choose manager</option>
+								</select>
+							</div>
+						</div>
 
-		<!--when release, change to CDN-->
+						<div class="center-align" style="margin-top: 15%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="createProject()">Create</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenCreateProject()">Cancel</button>
+						</div>
+					</div>
+				</div>
+
+				<div class=" changepwd-card z-depth-1 showorhidden hide" id="changePwd">
+					<div class="container">
+						<br />
+						<label style="font-size: 16px;" id="name_changePwd">User Name:</label>
+						<div class="input-field ">
+							<input id="old_pwd" type="password" class="validate">
+							<label for="old_pwd">Old Password</label>
+						</div>
+						<div class="input-field ">
+							<input id="new_pwd" type="password" class="validate">
+							<label for="new_pwd">New Password</label>
+						</div>
+						<div class="input-field ">
+							<input id="new1_pwd" type="password" class="validate">
+							<label for="new1_pwd">Confirm New Password</label>
+						</div>
+						<div class="center-align" style="margin-top: 10%;">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="confrimChangePwd()">Confirm</button>
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenChangePwd()">Cancel</button>
+						</div>
+
+					</div>
+				</div>
+
+				<!--The following is the log off and change password function. -->
+				<div class="fixed-action-btn horizontal " style="bottom: 45px; right: 24px;">
+					<a class="btn-floating btn-large red">
+						<i class="large mdi-navigation-menu"></i>
+					</a>
+					<ul>
+						<li><a class="btn-floating tooltipped green" data-position="top" data-delay="50" data-tooltip="Change Password"><i class="mdi-action-settings" onclick="showChangePwd()"></i></a></li>
+						<li><a class="btn-floating tooltipped " data-position="top" data-delay="50" data-tooltip="Log Off" onclick="logoff()"><i class="mdi-action-exit-to-app"></i></a></li>
+					</ul>
+				</div>
+
+			</div>
+			<!--debug-->
+			<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+			<script type="text/javascript" src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+			<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.1.js"></script>
+			<script type="text/javascript" src="js/main.js"></script>
+			<script type="application/javascript">
+				$(document).ready(function() {
+					$(".button-collapse").sideNav();
+					$('.dropdown-button').dropdown({
+						inDuration: 300,
+						outDuration: 225,
+						constrain_width: true, // Does not change width of dropdown to that of the activator
+						hover: false, // Activate on hover
+						gutter: 0, // Spacing from edge
+						belowOrigin: false // Displays dropdown below the button
+					});
+					$('.tooltipped').tooltip({
+						delay: 50
+					});
+					$('select').material_select();
+				});
+			</script>
+
+			<!--when release, change to CDN-->
 	</body>
 
 </html>
