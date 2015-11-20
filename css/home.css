@@ -3,17 +3,14 @@ body {
 	min-height: height: 100vh !important;
 	height: 100vh;
 }
-
 .merkel {
 	box-sizing: border-box;
 }
-
 .login-card {
 	width: 300px;
 	height: 400px;
 	margin: auto;
 }
-
 .main-side-card {
 	position: fixed;
 	width: 270px;
@@ -22,8 +19,6 @@ body {
 	margin: 0;
 	overflow: hidden;
 }
-
-
 /*the personal background*/
 
 .main-user-profile {
@@ -32,8 +27,6 @@ body {
 	height: 150px;
 	background-image: url(../img/profile_bg.png);
 }
-
-
 /*the welcome*/
 
 .main-user-profile-button {
@@ -42,30 +35,26 @@ body {
 	display: block;
 	padding: 0;
 	text-transform: none;
-	/*text-transform: none;*/
+	text-transform: none;
 	text-align: center;
 }
-
-
 /*the right div*/
 
 .righ-main-container {
 	margin-left: 280px;
 	height: 100%;
+	overflow: hidden;
 }
-
 .changepwd-card {
 	height: 400px;
 	width: 450px;
 	margin: 10% auto;
 }
-
 .addProject-card {
 	height: 400px;
 	width: 450px;
 	margin: 10% auto;
 }
-
 .deleteProject-card {
 	height: 400px;
 	width: 450px;
@@ -96,5 +85,5 @@ body {
 	}
 	.assignProject-card {
 		box-shadow: none;
-	}
+		}
 }
