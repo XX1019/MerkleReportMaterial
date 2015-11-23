@@ -261,6 +261,7 @@ function showAssignProject() {
 	$('#assignProject').removeClass('hide');
 	$('#choose_project_to_assign option:eq(0)').nextAll().remove();
 	load_assignProjectinfo();
+	
 	$('#add_member option:eq(0)').nextAll().remove();
 	link_assignmember();
 }
@@ -283,6 +284,7 @@ function load_assignProjectinfo() {
 			//	console.log(ProjectinfoString);
 			$("#choose_project_to_assign").append(ProjectinfoString);
 			$('#choose_project_to_assign').material_select('update');
+			//console.log('add option');
 		},
 		error: function(error) {
 			console.log(error);
@@ -396,7 +398,7 @@ function add_member() {
 			success: function() {
 				Materialize.toast('Add member successfully!', 3000, 'round');
 			//	console.log($('.member_has').html());
-				if ($('#assignproject_member').html() == 'Team members:None,Please add.') {
+				if ($('#assignproject_member').html() == 'Team members: None , Please add.') {
 					$('#assignproject_member').html('Team members:');
 				}
 
@@ -463,3 +465,121 @@ function delete_member() {
 		alert('Select None!');
 	}
 }
+
+
+
+/*---------------------------------------------------Fill             Project----------------------------------------------*/
+function  showFillProject(){
+	
+	$('.showorhidden').addClass('hide');
+	$('#fillProject').removeClass('hide');
+	load_fillProjectinfo();
+	$("#fillproject_sm").text("DEL/SM: ");
+	$("#fillproject_gdcm").text("GDC Manager:　");
+	$('#allocated').val('');
+	$('#actual').val('');
+	$('#accomplishment').val('');
+	
+}
+
+function hiddenFillProject(){
+	$('#fillProject').addClass('hide');
+}
+
+
+
+
+function load_fillProjectinfo() {
+	var user_current = null;
+	user_current = AV.User.current();
+	//console.log(user_current);
+	
+	var Member = AV.Object.extend('Member');
+	var query_project_member = new AV.Query(Member);
+	query_project_member.equalTo('name',user_current.get('username'));
+	var project_asmember = null;
+	var ProjectinfoString = "";
+	query_project_member.find({
+		success: function(result) {
+					console.log("Member" + result.length);
+			for (var i = 0; i < result.length; ++i) {
+				project_asmember = result[i].get('project');
+
+				ProjectinfoString += '<option value=' + i + '>' + project_asmember + '</option>';
+			}
+				console.log(ProjectinfoString);
+			$("#choose_project_to_fill").append(ProjectinfoString);
+			$('#choose_project_to_fill').material_select('update');
+		},
+		error: function(error) {
+			console.log(error);
+		}
+
+	});
+
+}
+
+
+function linkFillProjectinfo(){
+	//get the DELSm and GDC Manager from project table
+	var pp=$('#choose_project_to_fill').find("option:selected").text();
+	console.log(pp);
+	
+	var Project = AV.Object.extend('Project');
+	var query_P_info = new AV.Query(Project);
+	query_P_info.equalTo("projectName", pp);
+	query_P_info.find({
+		success: function(result) {
+			//result.get("DELSM");
+			console.log(result[0].get("DELSM"));
+			console.log(result[0].get("manager"));
+			$("#fillproject_sm").html("DEL/SM:  " + result[0].get("DELSM"));
+			$("#fillproject_gdcm").html("GDC Manager:  " + result[0].get("manager"));
+		},
+		error: function(error) {
+			console.dir(error);
+		}
+	});
+
+//get Allocated and actual from member
+	var user_current = null;
+	user_current = AV.User.current();
+	var Member = AV.Object.extend('Member');
+	var query_memberinfo = new AV.Query(Member);
+	query_memberinfo.equalTo('project', pp);
+	query_memberinfo.find({
+		success: function(result) {
+			//console.log(result.length +result[0].get('name')+user_current.get('username'));
+			if (result.length > 0) {
+
+				for (var i = 0; i < result.length; ++i) {
+					if (result[i].get('name') == user_current.get('username')) {
+
+						var mem = result[i];
+						console.log(mem.get('allocated'));
+						console.log(mem.get('actual'));
+						console.log(mem.get('accom'));
+						var accom= mem.get('accom');
+						var reg=new RegExp("<br/>","g"); 
+						accom = accom.replace(reg,'\r\n');
+						console.log(accom);
+						
+						
+						$('#allocated').val("fdgdf");
+						 $('#allocated').trigger('autoresize');
+						$('#actual').attr('placeholder',mem.get('actual'));
+						$('#workload').val(mem.get('workload'));
+						
+						$('#accomplishment').val(accom);
+					}
+				}
+			}
+		},
+		error: function(error) {
+
+
+		}
+	});
+
+}
+
