@@ -261,7 +261,7 @@ function showAssignProject() {
 	$('#assignProject').removeClass('hide');
 	$('#choose_project_to_assign option:eq(0)').nextAll().remove();
 	load_assignProjectinfo();
-	
+
 	$('#add_member option:eq(0)').nextAll().remove();
 	link_assignmember();
 }
@@ -397,14 +397,14 @@ function add_member() {
 		member.save(null, {
 			success: function() {
 				Materialize.toast('Add member successfully!', 3000, 'round');
-			//	console.log($('.member_has').html());
+				//	console.log($('.member_has').html());
 				if ($('#assignproject_member').html() == 'Team members: None , Please add.') {
 					$('#assignproject_member').html('Team members:');
 				}
 
 				$("#delete_member").append('<option >' + mm + '</option>');
 				$('#showmember').append('<div class="chip">' + mm + "</div>");
-				$('#add_member').find("option[text='Choose member']").attr('selected','selected');
+				$('#add_member').find("option[text='Choose member']").attr('selected', 'selected');
 				$('#add_member').val('');
 			},
 			error: function() {
@@ -445,7 +445,7 @@ function delete_member() {
 								//alert("Delete member successfully!");
 
 								link_deleteM();
-						
+
 							},
 							error: function(rs, error) {
 								// 出错了.
@@ -469,20 +469,22 @@ function delete_member() {
 
 
 /*---------------------------------------------------Fill             Project----------------------------------------------*/
-function  showFillProject(){
-	
+function showFillProject() {
+
 	$('.showorhidden').addClass('hide');
 	$('#fillProject').removeClass('hide');
+	$('#choose_project_to_fill option:eq(0)').nextAll().remove();
 	load_fillProjectinfo();
 	$("#fillproject_sm").text("DEL/SM: ");
 	$("#fillproject_gdcm").text("GDC Manager:　");
-	$('#allocated').val('');
-	$('#actual').val('');
+	$('#allocated').attr('placeholder', '');
+	$('#actual').attr('placeholder', '');
+	$('#workload').val('auto');
 	$('#accomplishment').val('');
-	
+
 }
 
-function hiddenFillProject(){
+function hiddenFillProject() {
 	$('#fillProject').addClass('hide');
 }
 
@@ -493,21 +495,21 @@ function load_fillProjectinfo() {
 	var user_current = null;
 	user_current = AV.User.current();
 	//console.log(user_current);
-	
+
 	var Member = AV.Object.extend('Member');
 	var query_project_member = new AV.Query(Member);
-	query_project_member.equalTo('name',user_current.get('username'));
+	query_project_member.equalTo('name', user_current.get('username'));
 	var project_asmember = null;
 	var ProjectinfoString = "";
 	query_project_member.find({
 		success: function(result) {
-					console.log("Member" + result.length);
+			console.log("Member" + result.length);
 			for (var i = 0; i < result.length; ++i) {
 				project_asmember = result[i].get('project');
 
 				ProjectinfoString += '<option value=' + i + '>' + project_asmember + '</option>';
 			}
-				console.log(ProjectinfoString);
+			console.log(ProjectinfoString);
 			$("#choose_project_to_fill").append(ProjectinfoString);
 			$('#choose_project_to_fill').material_select('update');
 		},
@@ -520,11 +522,11 @@ function load_fillProjectinfo() {
 }
 
 
-function linkFillProjectinfo(){
+function linkFillProjectinfo() {
 	//get the DELSm and GDC Manager from project table
-	var pp=$('#choose_project_to_fill').find("option:selected").text();
+	var pp = $('#choose_project_to_fill').find("option:selected").text();
 	console.log(pp);
-	
+
 	var Project = AV.Object.extend('Project');
 	var query_P_info = new AV.Query(Project);
 	query_P_info.equalTo("projectName", pp);
@@ -541,7 +543,7 @@ function linkFillProjectinfo(){
 		}
 	});
 
-//get Allocated and actual from member
+	//get Allocated and actual from member
 	var user_current = null;
 	user_current = AV.User.current();
 	var Member = AV.Object.extend('Member');
@@ -556,21 +558,22 @@ function linkFillProjectinfo(){
 					if (result[i].get('name') == user_current.get('username')) {
 
 						var mem = result[i];
-						console.log(mem.get('allocated'));
-						console.log(mem.get('actual'));
-						console.log(mem.get('accom'));
-						var accom= mem.get('accom');
-						var reg=new RegExp("<br/>","g"); 
-						accom = accom.replace(reg,'\r\n');
-						console.log(accom);
-						
-						
-						$('#allocated').val("fdgdf");
-						 $('#allocated').trigger('autoresize');
-						$('#actual').attr('placeholder',mem.get('actual'));
+						//						console.log(mem.get('allocated'));
+						//						console.log(mem.get('actual'));
+						//						console.log(mem.get('accom'));
+
+						$('#allocated').attr('placeholder', mem.get('allocated'));
+						$('#actual').attr('placeholder', mem.get('actual'));
 						$('#workload').val(mem.get('workload'));
-						
+
+						var accom = mem.get('accom');
+						var reg = new RegExp("<br/>", "g");
+						accom = accom.replace(reg, '\r\n');
+						console.log(accom);
 						$('#accomplishment').val(accom);
+						$('#accomplishment').trigger('autoresize');
+
+
 					}
 				}
 			}
@@ -580,6 +583,530 @@ function linkFillProjectinfo(){
 
 		}
 	});
+
+}
+
+//set the standard of allocated and actual
+function compare() {
+	var allocated = $('#allocated').val();
+	var actual = $('#actual').val();
+	console.log(allocated);
+	console.log(actual);
+
+	if (parseInt(actual) / parseInt(allocated) <= 0.5) {
+		$('#workload').val('Low');
+	}
+	if (parseInt(actual) / parseInt(allocated) > 0.5 && parseInt(actual) / parseInt(allocated) <= 1.1) {
+		$('#workload').val('Medium');
+	}
+	if (parseInt(actual) / parseInt(allocated) > 1.1) {
+		$('#workload').val('High');
+	}
+
+}
+
+
+function FillProject() {
+	var allocated = $('#allocated').val();
+	var actual = $('#actual').val();
+	var workload = $('#workload').val();
+	//to solve accomplishment change line
+	var accom = $('#accomplishment').val().replace(/\n/g, '_@').replace(/\r/g, '_#');
+	accom = accom.replace(/_@/g, '<br/>');
+
+	console.log(accom);
+	var m = $("#choose_project_to_fill").find("option:selected").text();
+	console.log(workload + allocated + actual);
+	if (m == 'Choose project') {
+		Materialize.toast('Please Select Project!', 3000, 'round');
+		//alert('Please Select Project!');
+	} else {
+		if (allocated == "" | actual == "") {
+			Materialize.toast('Please fill out!', 3000, 'round');
+			//	alert('Please fill out!');
+		} else {
+
+			if (allocated.substr(allocated.length - 1, 1) != '%') {
+				allocated = allocated + "%";
+			}
+			if (actual.substr(actual.length - 1, 1) != '%') {
+				actual = actual + "%";
+			}
+
+			var user_current = null;
+			user_current = AV.User.current();
+			var user = user_current.get('username');
+			var Member = AV.Object.extend('Member');
+			var query_member = new AV.Query(Member);
+			query_member.equalTo('project', m);
+			query_member.find({
+				success: function(result) {
+					if (result.length > 0) {
+
+						for (var i = 0; i < result.length; ++i) {
+							if (result[i].get('name') == user) {
+
+								var mem = result[i];
+								mem.set('allocated', allocated);
+								mem.set('actual', actual);
+								mem.set('workload', workload);
+								mem.set('accom', accom);
+								mem.save(null, {
+									success: function() {
+										//alert('Submit successfully!');
+										Materialize.toast('Submit successfully!', 3000, 'round');
+
+										fillclear();
+									},
+									error: function() {
+										console.log("Sumbit failed!");
+									}
+								})
+							}
+						}
+					}
+				},
+				error: function(error) {
+
+
+				}
+			});
+		}
+	}
+
+}
+
+function fillclear() {
+	$("#fillproject_sm").text("DEL/SM: ");
+	$("#fillproject_gdcm").text("GDC Manager:　");
+	$('#allocated').attr('placeholder', '');
+	$('#actual').attr('placeholder', '');
+	$('#workload').val('auto');
+	$('#accomplishment').val('');
+}
+
+
+/*---------------------------------------------query project---------------------------------------------*/
+function showQueryProject(){
+	$('.showorhidden').addClass('hide');
+	$('#queryProject').removeClass('hide');
+	form_accomplish()
+	test(); //get which projrct that user belong to 
+	get_asManager(); //get which project that user mamnge 
+}
+
+function send() {
+//	var sa = $('#hey').html();
+//	console.log(sa);
+	$("#href").attr("href", "mailto:?subject=Weekly report &body=");
+
+}
+
+
+//get all member's accomplishment into project's accomplishments
+function form_accomplish() {
+
+	var Project = AV.Object.extend('Project');
+	var query_project = new AV.Query('Project');
+	query_project.find({
+		success: function(result) {
+			//console.log(result.length);
+			for (var i = 0; i < result.length; ++i) {
+				var project = result[i];
+				search_member(project, function(pp, acco) {
+					console.log(pp.get("projectName") + ": " + acco);
+					pp.set('Accomplishments', acco);
+					pp.save({
+						success: function() {
+							console.log(pp.get("projectName") + 'successfully');
+						},
+						error: function() {
+							console.log('error');
+						}
+					});
+				});
+			}
+
+
+
+		},
+		error: function(error) {
+			console.log("error");
+		}
+	});
+
+
+	function search_member(project, callback) {
+
+		var Member = AV.Object.extend('Member');
+		var query_member = new AV.Query('Member');
+		query_member.equalTo('project', project.get('projectName'));
+		query_member.find({
+			success: function(result) {
+				console.log(project.get('projectName') + " has member is :" + result.length);
+				if (result.length > 0) {
+					var accomplish = '';
+					for (var i = 0; i < result.length; ++i) {
+						if (result[i].get('accom') != null) {
+							accomplish += result[i].get('name') + ":  <br/>" + result[i].get('accom') + '<br/>';
+							//							console.log(accomplish);
+						}
+
+					}
+					//console.log(accomplish);
+					callback(project, accomplish);
+				}
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+
+	}
+}
+
+// 显示该用户存在的Project  
+function test() {
+	//	var project_delsm = null;
+	//	var project_gdc = null;
+	//	var project_accomplish = null;
+	//	var project_delsm = null;
+	//	var project_name=null;
+	//	var member_count = null;
+
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+	//console.log("current user name is " + user);
+
+
+	var Member = AV.Object.extend('Member');
+	var query_m_p = new AV.Query(Member);
+	query_m_p.equalTo('name', user);
+	query_m_p.find({
+		success: function(result) {
+			console.log("as Member of project is " + result.length + "times");
+			if (result.length > 0) {
+
+				for (var i = 0; i < result.length; ++i) {
+					var p = result[i].get('project');
+					//找出身为member所在的project
+					console.log(p);
+					//查找project的相关信息
+
+					//查找member中 该project的member个数 及信息；
+					search(p, function(JSONObject, project) {
+						console.log(JSONObject);
+						var members = $.parseJSON(JSONObject);
+						console.log(members.member);
+						console.log("member.length= " + members.member.length);
+						member_count = members.member.length;
+						//						console.log(members.member[0].name);
+						show(members.member, project, function(p_info, all_member) {
+							var all_member_count = all_member.length;
+							console.log(p_info.get('DELSM'));
+							console.log(p_info.get('manager'));
+							console.log(p_info.get('Accomplishments'));
+							var project_delsm = p_info.get('DELSM');
+							var project_gdc = p_info.get('manager');
+							var project_accomplish = p_info.get('Accomplishments');
+							var project_name = p_info.get('projectName');
+							//							console.log("adjsjaldlasda");
+							if (all_member_count == 0) {
+								var htmlString = '<tr><td>' + project_name + '</td><td>' + project_delsm + '</td><td>' + project_gdc + '</td><td></td><td></td><td></td><td></td><td></td></tr>';
+								//这个project没有member的情况要单独写一个html字符串
+								$("#hey").append(htmlString);
+							}
+							if (all_member_count > 0) {
+								var member0 = all_member[0];
+								//								console.log(members.member[0].name);
+								var htmlstring = '<tr><td name="project" rowspan="' + all_member_count + '">' + project_name + '</td ><td rowspan="' + all_member_count + '">' + project_delsm + '</td><td rowspan="' + all_member_count + '">' + project_gdc + '</td><td>' + member0.name + '</td><td>' + member0.allocated + '</td><td>' + member0.actual + '</td><td>' + member0.workload + '</td><td rowspan="' + all_member_count + '">' + project_accomplish + '</td></tr>';
+								//console.log(htmlstring);
+								$('#hey').append(htmlstring);
+
+
+								if (all_member_count > 1) {
+									for (var i = 1; i < all_member_count; ++i) {
+										var memberi = all_member[i];
+										//										console.log(members.member[i].name + members.member[i].allocated);
+										var htmlstring = '<tr><td>' + memberi.name + '</td><td>' + memberi.allocated + '</td><td>' + memberi.actual + '</td><td>' + memberi.workload + '</td></tr>'
+										console.log(htmlstring);
+										$('#hey').append(htmlstring);
+									}
+								}
+
+							}
+
+							//							var htmlstring = '<tr><td name="project" rowspan="' + member_count + '">' + p + '</td ><td rowspan="' + member_count + '">' + project_delsm + '</td><td rowspan="' + member_count + '">' + project_gdc + '</td><td rowspan="' + member_count + '">' + project_accomplish + '</td></tr>';
+							//
+							//							console.log(htmlstring);
+							//							$('#hey').append(htmlstring);
+						});
+					});
+					//											console.log("member.length= "+member_count);
+
+				}
+			}
+
+		},
+		error: function(error) {
+			console.log('error');
+		}
+
+	});
+
+}
+
+
+
+function show(members, p, callback) {
+	var p_info = null;
+	var Project = AV.Object.extend('Project');
+	var query_project = new AV.Query("Project");
+	query_project.equalTo('projectName', p);
+	query_project.find({
+		success: function(result) {
+			//console.log(result.length);
+			if (result.length > 0) {
+				p_info = result[0];
+				//	console.log(p_info.get('DELSM'));
+				//	console.log(p_info.get('manager'));
+				//	console.log(p_info.get('Accomplishments'));
+			}
+			callback(p_info, members);
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+
+}
+
+function search(p, callback) {
+	var member_length = null;
+	var member = null;
+	//console.log(p);
+	var jsonObject = '{"projectName":"' + p + '","member":[';
+	var Member = AV.Object.extend('Member');
+	var query_member = new AV.Query('Member');
+	query_member.equalTo('project', p);
+	query_member.find({
+		success: function(result) {
+			member_length = result.length;
+			//console.log(member_length);
+
+			if (member_length > 0) {
+				for (var i = 0; i < member_length; i++) {
+					member = result[i];
+					var memberJSON = '{"name":"' + member.get('name') + '","allocated":"' + member.get('allocated') + '","actual":"' + member.get('actual') + '","workload":"' + member.get('workload') + '"}';
+					//					console.log(member.get('name'));
+					//					console.log(member.get('allocated'));
+					//					console.log(member.get('actual'));
+					jsonObject += memberJSON;
+					if (i < member_length - 1) {
+						jsonObject += ',';
+					}
+				}
+			}
+			jsonObject += ']}';
+			callback(jsonObject, p);
+		},
+		error: function(error) {
+			console.log(error);
+			callback(undefined);
+		}
+	});
+
+
+}
+
+
+
+function get_asManager() {
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+	//console.log(user);
+	var pro = document.getElementsByName('project');
+	console.log("has exist project is :" + pro.length);
+	//console.log(pro);
+	var Project = AV.Object.extend('Project');
+	var query_p_m = new AV.Query(Project);
+	query_p_m.equalTo('manager', user);
+	query_p_m.find({
+		success: function(result) {
+			console.log("as manger project is :" + result.length);
+			if (result.length > 0) {
+				for (var i = 0; i < result.length; ++i) {
+					var p_name = result[i];
+					//as manager has projects
+					//	console.log(p_name.get('projectName'));
+
+					lp_member(p_name, user, function(ismember, projName) {
+						console.log(projName.get('projectName') + " is member ?:" + ismember);
+
+						if (ismember == false) {
+							console.log("Manager project name is " + projName.get('projectName'));
+							//present as manager project that not as member.
+							//search table Member, get the members of the project
+							var Member = AV.Object.extend('Member');
+							var query_m = new AV.Query('Member');
+							query_m.equalTo('project', projName.get('projectName'));
+							query_m.find({
+								success: function(result) {
+									if (result.length == 0) {
+										var htmlstr = '<tr><td>' + projName.get('projectName') + '</td><td>' + projName.get('DELSM') + '</td><td>' + projName.get('manager') + '</td><td></td><td></td><td></td><td></td><td></td></tr>';
+										$('#hey').append(htmlstr);
+										console.log(result.length);
+									}
+									if (result.length > 0) {
+										var htmlstr = '<tr><td rowspan="' + result.length + '">' + projName.get('projectName') + '</td><td rowspan="' + result.length + '">' + projName.get('DELSM') + '</td><td rowspan="' + result.length + '">' + projName.get('manager') + '</td><td>' + result[0].get('name') + '</td><td>' + result[0].get('allocated') + '</td><td>' + result[0].get('actual') + '</td><td>' + result[0].get('workload') + '</td><td rowspan="' + result.length + '">' + projName.get('Accomplishments') + '</td></tr>';
+
+										$('#hey').append(htmlstr);
+
+										if (result.length > 1) {
+											console.log(result.length);
+											for (var i = 1; i < result.length; ++i) {
+												var htmlstr = '<tr><td>' + result[i].get('name') + '</td><td>' + result[i].get('allocated') + '</td><td>' + result[i].get('actual') + '</td><td>' + result[i].get('workload') + '</td></tr>';
+												$('#hey').append(htmlstr);
+											}
+
+										}
+
+									}
+
+								},
+								error: function(error) {
+									console.log(error);
+								}
+							});
+
+						}
+
+
+
+					});
+
+				}
+			}
+		},
+		error: function(error) {
+			console.log('error');
+		}
+	});
+
+}
+
+function lp_member(p_name, user, callback) {
+
+	//console.log(p_name.get('projectName'));
+	var Member = AV.Object.extend('Member');
+	var look_member = new AV.Query('Member');
+	look_member.equalTo("project", p_name.get('projectName'));
+	look_member.find({
+		success: function(result) {
+			var isMember = false;
+			if (result.length > 0) {
+				console.log(p_name.get('projectName') + "length = " + result.length);
+
+				for (var i = 0; i < result.length; ++i) {
+					var msm = result[i];
+					if (msm.get('name') == user) {
+						console.log("name equals");
+						isMember = true;
+					}
+					console.log(p_name.get('projectName') + msm.get('name'));
+
+				}
+
+			}
+
+			callback(isMember, p_name);
+
+
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+
+
+}
+
+//if you are manager,if not you have no permission
+//search all projects' information
+function get_all() {
+
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+	var Manager = AV.Object.extend('Manager');
+	var query_is_mananger = new AV.Query('Manager');
+	query_is_mananger.equalTo('username', user);
+	query_is_mananger.find({
+		success: function(result) {
+			console.log(result.length);
+			if (result.length == 0) {
+				alert("Sorry,You don't have permission!");
+			} else {
+				$('#hey tr:eq(0)').nextAll().remove();
+				var Project = AV.Object.extend('Project');
+				var query_project = new AV.Query('Project');
+				query_project.find({
+					success: function(result) {
+						//console.log(result.length);
+						for (var i = 0; i < result.length; ++i) {
+							var project = result[i];
+							get_member(project);
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+
+				function get_member(project, callback) {
+
+					var Member = AV.Object.extend('Member');
+					var query_m = new AV.Query('Member');
+					query_m.equalTo('project', project.get('projectName'));
+					query_m.find({
+						success: function(result) {
+							if (result.length == 0) {
+								var htmlstr = '<tr><td>' + project.get('projectName') + '</td><td>' + project.get('DELSM') + '</td><td>' + project.get('manager') + '</td><td></td><td></td><td></td><td></td><td></td></tr>';
+								$('#hey').append(htmlstr);
+								//	console.log(result.length);
+							}
+							if (result.length > 0) {
+								var htmlstr = '<tr><td rowspan="' + result.length + '">' + project.get('projectName') + '</td><td rowspan="' + result.length + '">' + project.get('DELSM') + '</td><td rowspan="' + result.length + '">' + project.get('manager') + '</td><td>' + result[0].get('name') + '</td><td>' + result[0].get('allocated') + '</td><td>' + result[0].get('actual') + '</td><td>' + result[0].get('workload') + '</td><td rowspan="' + result.length + '">' + project.get('Accomplishments') + '</td></tr>';
+
+								$('#hey').append(htmlstr);
+
+								if (result.length > 1) {
+									console.log(result.length);
+									for (var i = 1; i < result.length; ++i) {
+										var htmlstr = '<tr><td>' + result[i].get('name') + '</td><td>' + result[i].get('allocated') + '</td><td>' + result[i].get('actual') + '</td><td>' + result[i].get('workload') + '</td></tr>';
+										$('#hey').append(htmlstr);
+									}
+
+								}
+
+							}
+
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					});
+				}
+			}
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
+
 
 }
 

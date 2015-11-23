@@ -103,7 +103,35 @@
 
 			<div class="righ-main-container ">
 				<!--write all your components in right-main-container-->
-				<!--valign-wrapper    margin-right: -10%;-->
+				<!--query report-->
+
+				<div class="queryProject-card z-depth-1 showorhidden hide" id="queryProject">
+					<br />
+					<div class="container">
+						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="get_all()">Query all</button>
+
+						<a id="href" href="#">
+							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="send()">Send email</button>
+						</a>
+						<table class="highlight bordered ">
+							<thead>
+								<tr>
+									<th>Project </th>
+									<th>DEL/SM</th>
+									<th>GDC Manager</th>
+									<th>Team Member</th>
+									<th>Allocated %</th>
+									<th>Actual %</th>
+									<th>Workload </th>
+									<th>Key Accomplishments</th>
+								</tr>
+							</thead>
+							<tbody id="hey">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
 
 				<!--Fill report  -->
 
@@ -125,11 +153,11 @@
 						<br />
 						<div class="row" style="margin-left: 0px;">
 							<div class="input-field col s4">
-								<input placeholder="Placeholder" id="allocated" type="text" class="active">
+								<input placeholder="Placeholder" id="allocated" type="text" class="validate" onchange="compare()">
 								<label for="allocated">Allocated</label>
 							</div>
 							<div class="input-field col s4">
-								<input placeholder="Placeholder" id="actual" type="text" class="active">
+								<input placeholder="Placeholder" id="actual" type="text" class="validate" onchange="compare()">
 								<label for="actual">Actual</label>
 							</div>
 							<div class="input-field col s4">
@@ -150,11 +178,12 @@
 						</div>
 
 					</div>
-					<div class="center-align" style="margin-top: -40px;" >
+					<div class="center-align" style="margin-top: -40px;">
 						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="FillProject()">Submit</button>
 						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="hiddenFillProject()">Cancel</button>
 					</div>
-					<br /><br />
+					<br />
+					<br />
 				</div>
 
 				<!--assign project-->
