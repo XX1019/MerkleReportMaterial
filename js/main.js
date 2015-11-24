@@ -691,8 +691,12 @@ function fillclear() {
 	$("#fillproject_gdcm").text("GDC Manager:　");
 	$('#allocated').attr('placeholder', '');
 	$('#actual').attr('placeholder', '');
+	$('#allocated').val('');
+	$('#actual').val('');
 	$('#workload').val('auto');
 	$('#accomplishment').val('');
+	$('#choose_project_to_fill').find("option[text='Choose project']").attr('selected', 'selected');
+	$('#choose_project_to_fill').val('');
 }
 
 
@@ -700,6 +704,7 @@ function fillclear() {
 function showQueryProject() {
 	$('.showorhidden').addClass('hide');
 	$('#queryProject').removeClass('hide');
+	$('#hey tr').remove();
 	form_accomplish()
 	test(); //get which projrct that user belong to 
 	get_asManager(); //get which project that user mamnge 
