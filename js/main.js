@@ -493,6 +493,9 @@ function showFillProject() {
 	$('#fillProject').removeClass('hide');
 	$('#choose_project_to_fill option:eq(0)').nextAll().remove();
 	load_fillProjectinfo();
+	$('#choose_project_to_fill').find("option[text='Choose member']").attr('selected', 'selected');
+	$('#choose_project_to_fill').val('');
+	
 	$("#fillproject_sm").text("DEL/SM: ");
 	$("#fillproject_gdcm").text("GDC Manager:　");
 	$('#allocated').attr('placeholder', '');
