@@ -3,7 +3,7 @@ $(document).ready(function() {
 	AV.initialize('LxpfQik9wwJivKv9dygidXCM', 'uHVT6193PNbwx6Wf5NnExCF5');
 	var user_current = null;
 	user_current = AV.User.current();
-	document.getElementById("user").innerHTML = "Hi~ " + user_current.get('username') + ", Welcome!";
+	$('.user').text("Hi~ " + user_current.get('username') + ", Welcome!");
 
 	addProject_linkmanager();
 	//load_Projectinfo();
@@ -733,7 +733,7 @@ function form_accomplish() {
 					pp.set('Accomplishments', acco);
 					pp.save({
 						success: function() {
-							console.log(pp.get("projectName") + 'successfully');
+						//	console.log(pp.get("projectName") + 'successfully');
 						},
 						error: function() {
 							console.log('error');
@@ -1125,12 +1125,24 @@ function get_all() {
 
 }
 
-
+/*weekly clear  successfully*/
 function weeklyclear() {
 
 
-	var Member = AV.Object.extend('Member');
-	var clearquery = new AV.Query('Member');
-	clearquery.equalTo();
+	var TestObject = AV.Object.extend('TestObject');
+	var clearquery = new AV.Query('TestObject');
+	clearquery.find({
+		success:function(result){
+			 console.log(result.length );
+			for(var i=0;i<result.length;++i){
+				result[i].unset('name');
+				console.log('success');
+				result[i].save();
+			}
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
 
 }

@@ -25,15 +25,28 @@
 		<!--side bar can toggle on small screens but do not show on medium and up-->
 		<div id="slide-out" class="side-nav">
 			<div class="main-user-profile">
-				<i class="medium mdi-action-account-circle white-text "></i>
-				<div class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>zhilong.wang@shanbay.com</div>
+				<i class="medium mdi-action-account-circle white-text  "></i>
+				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button user" data-activates='dropdown1'>Username</div>
 			</div>
+			<!--the following is the chosen-->
+			
+			<ul class="collection">
+				<li class="collection-item" onclick="showFillProject()">Fill Report</li>
+				<li class="collection-item" onclick="showQueryProject()">Query Report</li>
+				<li class="collection-item" onclick="showAddProject()">Add New Project</li>
+				<li class="collection-item" onclick="showAssignProject()Project()">Assign Project</li>
+				<li class="collection-item" onclick="showDeleteProject()">Delete Project</li>
+				<li class="collection-item" onclick="showChangePwd()">Change password</li>
+				<li class="collection-item" onclick="logoff()">Log off</li>
+			</ul>
+
 		</div>
+
 		<!--side bar shows only on medium and large screen-->
 		<div class="hide-on-small-and-down main-side-card z-depth-1-half ">
 			<div class="main-user-profile">
 				<i class="medium mdi-action-account-circle white-text  "></i>
-				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button" data-activates='dropdown1'>Username</div>
+				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button user" data-activates='dropdown1'>Username</div>
 			</div>
 			<!--the following is the chosen-->
 			<ul class="collapsible" data-collapsible="accordion">
@@ -113,6 +126,10 @@
 						<a id="href" href="#">
 							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="send()">Send email</button>
 						</a>
+
+						<div>
+							<a onclick="weeklyclear()">clear</a>
+						</div>
 						<table class="highlight bordered ">
 							<thead>
 								<tr>
