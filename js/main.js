@@ -740,7 +740,7 @@ function form_accomplish() {
 			for (var i = 0; i < result.length; ++i) {
 				var project = result[i];
 				search_member(project, function(pp, acco) {
-					console.log(pp.get("projectName") + ": " + acco);
+				//	console.log(pp.get("projectName") + ": " + acco);
 					pp.set('Accomplishments', acco);
 					pp.save({
 						success: function() {
@@ -769,7 +769,7 @@ function form_accomplish() {
 		query_member.equalTo('project', project.get('projectName'));
 		query_member.find({
 			success: function(result) {
-				console.log(project.get('projectName') + " has member is :" + result.length);
+			//	console.log(project.get('projectName') + " has member is :" + result.length);
 				if (result.length > 0) {
 					var accomplish = '';
 					for (var i = 0; i < result.length; ++i) {
@@ -1139,7 +1139,8 @@ function get_all() {
 /*weekly clear  successfully*/
 function weeklyclear() {
 
-
+//clear the attribute of table member
+/*
 	var TestObject = AV.Object.extend('TestObject');
 	var clearquery = new AV.Query('TestObject');
 	clearquery.find({
@@ -1155,5 +1156,34 @@ function weeklyclear() {
 			console.log(error);
 		}
 	});
+*/
+
+
+//get the html string of table
+
+var html_of_table=  $('#hey').html();
+console.log(html_of_table);
+
+var Record = AV.Object.extend('Record');
+var record=new Record();
+
+record.set('content',html_of_table);
+
+record.save(null, {
+  success: function(record) {
+    // 成功保存之后，执行其他逻辑.
+    console('New object created with date: ' + record.id);
+  },
+  error: function(record, error) {
+    // 失败之后执行其他逻辑
+    // error 是 AV.Error 的实例，包含有错误码和描述信息.
+    alert('Failed to create new object, with error message: ' + error.message);
+  }
+});
+
+
+
+
+
 
 }
