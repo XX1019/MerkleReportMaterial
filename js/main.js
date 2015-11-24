@@ -10,23 +10,23 @@ $(document).ready(function() {
 });
 
 function logoff() {
-		AV.User.logOut();
-		window.location.href = "index.html";
-	}
-	/*---------------------------------------------change password-----------------------------------------------------------------------------------*/
-	//show change password
+	AV.User.logOut();
+	window.location.href = "index.html";
+}
+/*---------------------------------------------change password-----------------------------------------------------------------------------------*/
+//show change password
 
 function showChangePwd() {
-		$('.showorhidden').addClass('hide');
-		$('#changePwd').removeClass('hide');
-		var user_current = null;
-		user_current = AV.User.current();
-		$('#name_changePwd').html("User Name: " + user_current.get('username'));
-		$('#old_pwd').val('');
-		$('#new_pwd').val('');
-		$('#new1_pwd').val('');
-	}
-	//hidden change password
+	$('.showorhidden').addClass('hide');
+	$('#changePwd').removeClass('hide');
+	var user_current = null;
+	user_current = AV.User.current();
+	$('#name_changePwd').html("User Name: " + user_current.get('username'));
+	$('#old_pwd').val('');
+	$('#new_pwd').val('');
+	$('#new1_pwd').val('');
+}
+//hidden change password
 
 function hiddenChangePwd() {
 	$('#changePwd').addClass('hide');
@@ -68,13 +68,13 @@ function hiddenCreateProject() {
 }
 
 function showAddProject() {
-		$('.showorhidden').addClass('hide');
-		$("#addProject").removeClass('hide');
-		$('#projectN').val("");
-		$('#sm').val("");
-		$("#choose_manager").val("");
-	}
-	//this function has problem
+	$('.showorhidden').addClass('hide');
+	$("#addProject").removeClass('hide');
+	$('#projectN').val("");
+	$('#sm').val("");
+	$("#choose_manager").val("");
+}
+//this function has problem
 
 function addProject_linkmanager() {
 	var Manager = AV.Object.extend('Manager');
@@ -250,11 +250,11 @@ function deleteProject() {
 
 /*---------------------------------------------assign project-----------------------------------------------------------------------------------*/
 function hiddenAssignProject() {
-//	$("#assignproject_sm").text("DEL/SM: ");
-//	$("#assignproject_gdcm").text("GDC Manager:　");
-//	$('#assignproject_member').text('Team Member(s):');
-//	$('#showmember div').remove();
-//	$('#delete_member option:eq(0)').nextAll().remove();
+	//	$("#assignproject_sm").text("DEL/SM: ");
+	//	$("#assignproject_gdcm").text("GDC Manager:　");
+	//	$('#assignproject_member').text('Team Member(s):');
+	//	$('#showmember div').remove();
+	//	$('#delete_member option:eq(0)').nextAll().remove();
 	$('#assignProject').addClass('hide');
 }
 
@@ -262,18 +262,24 @@ function hiddenAssignProject() {
 function showAssignProject() {
 	$('.showorhidden').addClass('hide');
 	$('#assignProject').removeClass('hide');
-	
+
 	$("#assignproject_sm").text("DEL/SM: ");
 	$("#assignproject_gdcm").text("GDC Manager:　");
 	$('#assignproject_member').text('Team Member(s):');
 	$('#showmember div').remove();
 	$('#delete_member option:eq(0)').nextAll().remove();
-	
+
 	$('#choose_project_to_assign option:eq(0)').nextAll().remove();
 	load_assignProjectinfo();
 
 	$('#add_member option:eq(0)').nextAll().remove();
 	link_assignmember();
+
+	$('#choose_project_to_assign').find("option[text='Choose project']").attr('selected', 'selected');
+	$('#choose_project_to_assign').val('');
+	$('#delete_member').find("option[text='Choose member']").attr('selected', 'selected');
+	$('#delete_member').val('');
+
 }
 
 
@@ -320,6 +326,8 @@ function link_deleteM() {
 	var m = $("#choose_project_to_assign").find("option:selected").text();
 	$('#assignproject_member').html('Team Member(s):');
 	$('#delete_member option:eq(0)').nextAll().remove();
+	$('#delete_member').find("option[text='Choose member']").attr('selected', 'selected');
+	$('#delete_member').val('');
 
 	var Member = AV.Object.extend('Member');
 	var query_M_info = new AV.Query(Member);
@@ -453,7 +461,7 @@ function delete_member() {
 								console.log('success');
 								Materialize.toast('Delete member successfully!', 3000, 'round');
 								//alert("Delete member successfully!");
-
+								
 								link_deleteM();
 
 							},
@@ -733,7 +741,7 @@ function form_accomplish() {
 					pp.set('Accomplishments', acco);
 					pp.save({
 						success: function() {
-						//	console.log(pp.get("projectName") + 'successfully');
+							//	console.log(pp.get("projectName") + 'successfully');
 						},
 						error: function() {
 							console.log('error');
@@ -1132,15 +1140,15 @@ function weeklyclear() {
 	var TestObject = AV.Object.extend('TestObject');
 	var clearquery = new AV.Query('TestObject');
 	clearquery.find({
-		success:function(result){
-			 console.log(result.length );
-			for(var i=0;i<result.length;++i){
+		success: function(result) {
+			console.log(result.length);
+			for (var i = 0; i < result.length; ++i) {
 				result[i].unset('name');
 				console.log('success');
 				result[i].save();
 			}
 		},
-		error:function(error){
+		error: function(error) {
 			console.log(error);
 		}
 	});
