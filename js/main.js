@@ -22,6 +22,9 @@ function showChangePwd() {
 		var user_current = null;
 		user_current = AV.User.current();
 		$('#name_changePwd').html("User Name: " + user_current.get('username'));
+		$('#old_pwd').val('');
+		$('#new_pwd').val('');
+		$('#new1_pwd').val('');
 	}
 	//hidden change password
 
@@ -247,11 +250,11 @@ function deleteProject() {
 
 /*---------------------------------------------assign project-----------------------------------------------------------------------------------*/
 function hiddenAssignProject() {
-	$("#assignproject_sm").text("DEL/SM: ");
-	$("#assignproject_gdcm").text("GDC Manager:　");
-	$('#assignproject_member').text('Team Member(s):');
-	$('#showmember div').remove();
-	$('#delete_member option:eq(0)').nextAll().remove();
+//	$("#assignproject_sm").text("DEL/SM: ");
+//	$("#assignproject_gdcm").text("GDC Manager:　");
+//	$('#assignproject_member').text('Team Member(s):');
+//	$('#showmember div').remove();
+//	$('#delete_member option:eq(0)').nextAll().remove();
 	$('#assignProject').addClass('hide');
 }
 
@@ -259,6 +262,13 @@ function hiddenAssignProject() {
 function showAssignProject() {
 	$('.showorhidden').addClass('hide');
 	$('#assignProject').removeClass('hide');
+	
+	$("#assignproject_sm").text("DEL/SM: ");
+	$("#assignproject_gdcm").text("GDC Manager:　");
+	$('#assignproject_member').text('Team Member(s):');
+	$('#showmember div').remove();
+	$('#delete_member option:eq(0)').nextAll().remove();
+	
 	$('#choose_project_to_assign option:eq(0)').nextAll().remove();
 	load_assignProjectinfo();
 
@@ -687,7 +697,7 @@ function fillclear() {
 
 
 /*---------------------------------------------query project---------------------------------------------*/
-function showQueryProject(){
+function showQueryProject() {
 	$('.showorhidden').addClass('hide');
 	$('#queryProject').removeClass('hide');
 	form_accomplish()
@@ -696,8 +706,8 @@ function showQueryProject(){
 }
 
 function send() {
-//	var sa = $('#hey').html();
-//	console.log(sa);
+	//	var sa = $('#hey').html();
+	//	console.log(sa);
 	$("#href").attr("href", "mailto:?subject=Weekly report &body=");
 
 }
@@ -1110,3 +1120,12 @@ function get_all() {
 
 }
 
+
+function weeklyclear() {
+
+
+	var Member = AV.Object.extend('Member');
+	var clearquery = new AV.Query('Member');
+	clearquery.equalTo();
+
+}
