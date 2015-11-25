@@ -376,7 +376,6 @@ function link_project(m) {
 }
 
 function link_assignmember() {
-
 	var User = AV.Object.extend('User');
 	var query_user = new AV.Query(User);
 	var user = null;
@@ -387,7 +386,7 @@ function link_assignmember() {
 
 			for (var i = 0; i < result.length; ++i) {
 				user = result[i].get('username');
-				//console.log(manager01);
+				//	console.log(user);
 				HtmlString += '<option>' + user + '</option>';
 			}
 			//console.log(HtmlString);
@@ -461,7 +460,7 @@ function delete_member() {
 								console.log('success');
 								Materialize.toast('Delete member successfully!', 3000, 'round');
 								//alert("Delete member successfully!");
-								
+
 								link_deleteM();
 
 							},
@@ -488,20 +487,22 @@ function delete_member() {
 
 /*---------------------------------------------------Fill             Project----------------------------------------------*/
 function showFillProject() {
-
+	//weeklyclear();
 	$('.showorhidden').addClass('hide');
 	$('#fillProject').removeClass('hide');
 	$('#choose_project_to_fill option:eq(0)').nextAll().remove();
 	load_fillProjectinfo();
 	$('#choose_project_to_fill').find("option[text='Choose member']").attr('selected', 'selected');
 	$('#choose_project_to_fill').val('');
-	
+
 	$("#fillproject_sm").text("DEL/SM: ");
 	$("#fillproject_gdcm").text("GDC Manager:　");
 	$('#allocated').attr('placeholder', '');
 	$('#actual').attr('placeholder', '');
 	$('#workload').val('auto');
 	$('#accomplishment').val('');
+
+
 
 }
 
@@ -676,8 +677,8 @@ function FillProject() {
 									success: function() {
 										//alert('Submit successfully!');
 										Materialize.toast('Submit successfully!', 3000, 'round');
-
 										fillclear();
+
 									},
 									error: function() {
 										console.log("Sumbit failed!");
@@ -708,6 +709,10 @@ function fillclear() {
 	$('#accomplishment').val('');
 	$('#choose_project_to_fill').find("option[text='Choose project']").attr('selected', 'selected');
 	$('#choose_project_to_fill').val('');
+
+
+
+
 }
 
 
@@ -715,11 +720,76 @@ function fillclear() {
 function showQueryProject() {
 	$('.showorhidden').addClass('hide');
 	$('#queryProject').removeClass('hide');
+	$('#choose_week').addClass('hide');
+	$('#save').addClass('hide');
 	$('#hey tr').remove();
+	$('#choose_week option:eq(0)').nextAll().remove();
+	$('#choose_week').find("option[text='Choose week']").attr('selected', 'selected');
+	$('#choose_week').val('');
 	form_accomplish()
 	test(); //get which projrct that user belong to 
 	get_asManager(); //get which project that user mamnge 
+	load_record();
 }
+
+function load_record() {
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+
+	var recordoption = "";
+	var Record = AV.Object.extend('Record');
+	var query_record = new AV.Query('Record');
+	//query_record.equalTo('name', user);
+	query_record.find({
+		success: function(result) {
+			console.log(result.length);
+			for (var i = 0; i < result.length; ++i) {
+				console.log(result[i].get('week'));
+				recordoption += '<option>' + result[i].get('week') + '</option>';
+
+			}
+			console.log(recordoption);
+			$('#choose_week').append(recordoption);
+			$('#choose_week').trigger('autoresize');
+
+		},
+		error: function(error) {
+
+		}
+	});
+}
+
+
+function showRecord() {
+	var dd = $("#choose_week").find("option:selected").text();
+
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+
+
+	var Record = AV.Object.extend('Record');
+	var query_record = new AV.Query('Record');
+	query_record.equalTo('week', dd);
+	//query_record.equalTo('name', user);
+	query_record.find({
+		success: function(result) {
+			console.log(result.length);
+			if (result.length == 1) {
+				$('#hey tr').remove();
+				$('#hey').append(result[0].get('content'));
+			}
+
+
+		},
+		error: function(error) {
+
+		}
+	});
+}
+
+
 
 function send() {
 	//	var sa = $('#hey').html();
@@ -740,7 +810,7 @@ function form_accomplish() {
 			for (var i = 0; i < result.length; ++i) {
 				var project = result[i];
 				search_member(project, function(pp, acco) {
-				//	console.log(pp.get("projectName") + ": " + acco);
+					//	console.log(pp.get("projectName") + ": " + acco);
 					pp.set('Accomplishments', acco);
 					pp.save({
 						success: function() {
@@ -769,7 +839,7 @@ function form_accomplish() {
 		query_member.equalTo('project', project.get('projectName'));
 		query_member.find({
 			success: function(result) {
-			//	console.log(project.get('projectName') + " has member is :" + result.length);
+				//	console.log(project.get('projectName') + " has member is :" + result.length);
 				if (result.length > 0) {
 					var accomplish = '';
 					for (var i = 0; i < result.length; ++i) {
@@ -1063,7 +1133,10 @@ function lp_member(p_name, user, callback) {
 //if you are manager,if not you have no permission
 //search all projects' information
 function get_all() {
-
+	$('#choose_week').find("option[text='Choose week']").attr('selected', 'selected');
+	$('#choose_week').val('');
+	
+	
 	var user_current = null;
 	user_current = AV.User.current();
 	var user = user_current.get('username');
@@ -1076,7 +1149,9 @@ function get_all() {
 			if (result.length == 0) {
 				alert("Sorry,You don't have permission!");
 			} else {
-				$('#hey tr:eq(0)').nextAll().remove();
+				$('#choose_week').removeClass('hide');
+				$('#save').removeClass('hide');
+				$('#hey tr').remove();
 				var Project = AV.Object.extend('Project');
 				var query_project = new AV.Query('Project');
 				query_project.find({
@@ -1133,13 +1208,37 @@ function get_all() {
 		}
 	});
 
-
 }
 
-/*weekly clear  successfully*/
-function weeklyclear() {
+
 
 //clear the attribute of table member
+function clear_detail_of_member() {
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
+	var Member = AV.Object.extend('Member');
+	var clearquery = new AV.Query('Member');
+	clearquery.equalTo('name', user);
+	clearquery.find({
+		success: function(result) {
+
+			console.log('Member has records: ' + result.length);
+			for (var i = 0; i < result.length; ++i) {
+				result[i].unset('accom');
+				result[i].unset('actual');
+				result[i].unset('workload');
+				result[i].unset('allocated');
+				console.log('success');
+				result[i].save();
+			}
+		},
+		error: function(error) {
+
+		}
+	});
+
+}
 /*
 	var TestObject = AV.Object.extend('TestObject');
 	var clearquery = new AV.Query('TestObject');
@@ -1159,31 +1258,84 @@ function weeklyclear() {
 */
 
 
-//get the html string of table
+/*weekly clear  successfully*/
+function weeklyclear() {
+//	var user_current = null;
+//	user_current = AV.User.current();
+//	var user = user_current.get('username');
+	var Record = AV.Object.extend('Record');
+	var query_record = new AV.Query('Record');
+	query_record.equalTo('week', getWeekStringByObject(getWeekObject()));
+//	query_record.equalTo('name', user);
+	//console.log( getWeekStringByObject(getWeekObject()));
+	//console.log(user);
+	query_record.find({
+		success: function(result) {
+			console.log(result.length);
+			if (result.length == 0) {
+				
+				saverecord();
+				Materialize.toast("save the record of he week before last", 2000, 'round');
 
-var html_of_table=  $('#hey').html();
-console.log(html_of_table);
+			}
+			if (result.length == 1) {
+				console.log('the record has been exsitd');
+			}
 
-var Record = AV.Object.extend('Record');
-var record=new Record();
+		},
+		error: function(error) {
+			console.log(error.message);
+		}
+	});
 
-record.set('content',html_of_table);
-
-record.save(null, {
-  success: function(record) {
-    // 成功保存之后，执行其他逻辑.
-    console('New object created with date: ' + record.id);
-  },
-  error: function(record, error) {
-    // 失败之后执行其他逻辑
-    // error 是 AV.Error 的实例，包含有错误码和描述信息.
-    alert('Failed to create new object, with error message: ' + error.message);
-  }
-});
+}
 
 
+function getWeekObject() {
+	var today = new Date();
+	//the week save the last week record
+	var start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1 - 7);
+	var end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5 - today.getDay()-7);
+	//					console.log(start);
+	//					console.log(end);
+	return {
+		start: start,
+		end: end
+	};
+}
+
+function getWeekStringByObject(weekObject) {
+	return weekObject.start.getFullYear() + "/" + weekObject.start.getMonth() + "/" + weekObject.start.getDate() + "-" + weekObject.end.getFullYear() + "/" + weekObject.end.getMonth() + "/" + weekObject.end.getDate();
+
+}
 
 
+function saverecord() {
+	var html_of_table = $('#hey').html();
+	//console.log(html_of_table);
 
+	var user_current = null;
+	user_current = AV.User.current();
+	var user = user_current.get('username');
 
+	var Record = AV.Object.extend('Record');
+	var record = new Record();
+
+	record.set('content', html_of_table);
+	record.set('week', getWeekStringByObject(getWeekObject()));
+//	record.set('name', "manager");
+
+	record.save(null, {
+		success: function(record) {
+			// 成功保存之后，执行其他逻辑.
+			console('successfully');
+			Materialize.toast("save record successfully",2000,'round');
+
+		},
+		error: function(record, error) {
+			// 失败之后执行其他逻辑
+			// error 是 AV.Error 的实例，包含有错误码和描述信息.
+			alert('Failed to create new object, with error message: ' + error.message);
+		}
+	});
 }

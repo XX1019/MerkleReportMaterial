@@ -29,7 +29,7 @@
 				<div id="user" class="waves-effect waves-light  dropdown-button btn-flat main-user-profile-button user" data-activates='dropdown1'>Username</div>
 			</div>
 			<!--the following is the chosen-->
-			
+
 			<ul class="collection">
 				<li class="collection-item" onclick="showFillProject()">Fill Report</li>
 				<li class="collection-item" onclick="showQueryProject()">Query Report</li>
@@ -121,15 +121,27 @@
 				<div class="queryProject-card z-depth-1 showorhidden hide" id="queryProject">
 					<br />
 					<div class="container">
-						<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="get_all()">Query all</button>
 
-						<a id="href" href="#">
-							<button class="btn waves-effect waves-light blue" type="submit" name="action" style="width: 40%;" onclick="send()">Send email</button>
-						</a>
+						<div class="row col s12">
 
-						<div>
-							<a onclick="weeklyclear()">clear</a>
+							<button class="btn waves-effect waves-light blue col s1" type="submit" name="action" style="width: 20%;" onclick="get_all()">Query all</button>
+
+							<a id="href" href="#">
+								<button class="btn waves-effect waves-light blue col s1" type="submit" name="action" style="width: 20%; margin:0 2%" onclick="send()">Send email</button>
+							</a>
+
+							<!--<div class="row valign-wrapper col s5">-->
+							
+					 <button  id="save" class="btn waves-effect waves-light blue col s1 hide" type="submit" name="action" style="width: 20%; margin-right: 2%;" onclick="weeklyclear()">Save report</button>
+							
+									<select class="browser-default col s4 hide" id="choose_week" onchange="showRecord()">
+										<option value="" disabled selected>Choose week </option>
+									</select>
+						
+							<!--</div>-->
 						</div>
+						<!--<a onclick="console.log(getWeekStringByObject(getWeekObject()))">clear</a>-->
+
 						<table class="highlight bordered " id="querytable">
 							<thead>
 								<tr>
@@ -360,6 +372,10 @@
 						delay: 50
 					});
 					$('select').material_select();
+					$('.datepicker').pickadate({
+						selectMonths: true, // Creates a dropdown to control month
+						selectYears: 5 // Creates a dropdown of 15 years to control year
+					});
 				});
 			</script>
 
