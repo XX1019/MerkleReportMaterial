@@ -48,7 +48,7 @@ function confrimChangePwd() {
 		user.updatePassword(old, new1, {
 			success: function() {
 				//更新成功
-				Materialize.toast('Change successfully', 3000, 'rounded');
+				Materialize.toast('Change successfully,Please wait!', 3000, 'rounded');
 				setTimeout("AV.User.logOut()", 3000);
 				setTimeout("window.location.href = 'index.html'", 3001);
 			},
@@ -1054,7 +1054,7 @@ function get_asManager() {
 									if (result.length == 0) {
 										var htmlstr = '<tr><td>' + projName.get('projectName') + '</td><td>' + projName.get('DELSM') + '</td><td>' + projName.get('manager') + '</td><td></td><td></td><td></td><td></td><td></td></tr>';
 										$('#hey').append(htmlstr);
-										console.log(result.length);
+									//	console.log(result.length);
 									}
 									if (result.length > 0) {
 										var htmlstr = '<tr><td rowspan="' + result.length + '">' + projName.get('projectName') + '</td><td rowspan="' + result.length + '">' + projName.get('DELSM') + '</td><td rowspan="' + result.length + '">' + projName.get('manager') + '</td><td>' + result[0].get('name') + '</td><td>' + result[0].get('allocated') + '</td><td>' + result[0].get('actual') + '</td><td>' + result[0].get('workload') + '</td><td rowspan="' + result.length + '">' + projName.get('Accomplishments') + '</td></tr>';
@@ -1135,8 +1135,8 @@ function lp_member(p_name, user, callback) {
 function get_all() {
 	$('#choose_week').find("option[text='Choose week']").attr('selected', 'selected');
 	$('#choose_week').val('');
-	
-	
+
+
 	var user_current = null;
 	user_current = AV.User.current();
 	var user = user_current.get('username');
@@ -1185,7 +1185,7 @@ function get_all() {
 								$('#hey').append(htmlstr);
 
 								if (result.length > 1) {
-									console.log(result.length);
+								//	console.log(result.length);
 									for (var i = 1; i < result.length; ++i) {
 										var htmlstr = '<tr><td>' + result[i].get('name') + '</td><td>' + result[i].get('allocated') + '</td><td>' + result[i].get('actual') + '</td><td>' + result[i].get('workload') + '</td></tr>';
 										$('#hey').append(htmlstr);
@@ -1211,7 +1211,6 @@ function get_all() {
 }
 
 
-
 //clear the attribute of table member
 function clear_detail_of_member() {
 	var user_current = null;
@@ -1219,7 +1218,7 @@ function clear_detail_of_member() {
 	var user = user_current.get('username');
 	var Member = AV.Object.extend('Member');
 	var clearquery = new AV.Query('Member');
-	clearquery.equalTo('name', user);
+	//clearquery.equalTo('name', 'Jia Xia');
 	clearquery.find({
 		success: function(result) {
 
@@ -1260,26 +1259,32 @@ function clear_detail_of_member() {
 
 /*weekly clear  successfully*/
 function weeklyclear() {
-//	var user_current = null;
-//	user_current = AV.User.current();
-//	var user = user_current.get('username');
+	//	var user_current = null;
+	//	user_current = AV.User.current();
+	//	var user = user_current.get('username');
 	var Record = AV.Object.extend('Record');
 	var query_record = new AV.Query('Record');
 	query_record.equalTo('week', getWeekStringByObject(getWeekObject()));
-//	query_record.equalTo('name', user);
+	//	query_record.equalTo('name', user);
 	//console.log( getWeekStringByObject(getWeekObject()));
 	//console.log(user);
 	query_record.find({
 		success: function(result) {
 			console.log(result.length);
 			if (result.length == 0) {
-				
-				saverecord();
-				Materialize.toast("save the record of he week before last", 2000, 'round');
 
+				saverecord();
+				//Materialize.toast("save the record of last week", 2000, 'round');
+			$('#choose_week').find("option[text='Choose week']").attr('selected', 'selected');
+			$('#choose_week').val('');
+			$('#choose_week option:eq(0)').nextAll().remove();
+			setTimeout('load_record()',2000);
+			Materialize.toast('Deleting....',1000,'round');
+			setTimeout('clear_detail_of_member()',3000);
+		
 			}
 			if (result.length == 1) {
-				console.log('the record has been exsitd');
+				Materialize.toast('the record has been exsitd', 2000, 'round');
 			}
 
 		},
@@ -1295,7 +1300,7 @@ function getWeekObject() {
 	var today = new Date();
 	//the week save the last week record
 	var start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1 - 7);
-	var end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5 - today.getDay()-7);
+	var end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5 - today.getDay() - 7);
 	//					console.log(start);
 	//					console.log(end);
 	return {
@@ -1323,13 +1328,15 @@ function saverecord() {
 
 	record.set('content', html_of_table);
 	record.set('week', getWeekStringByObject(getWeekObject()));
-//	record.set('name', "manager");
+	//	record.set('name', "manager");
 
 	record.save(null, {
 		success: function(record) {
 			// 成功保存之后，执行其他逻辑.
+
+			Materialize.toast("save record successfully", 2000, 'round');
+
 			console('successfully');
-			Materialize.toast("save record successfully",2000,'round');
 
 		},
 		error: function(record, error) {
